@@ -21,9 +21,9 @@ public static function getFormData(){
     $arr['userEmail'] = isset($_POST['userEmail'])? trim($_POST['userEmail']): "";
     $arr['messageText'] = isset($_POST['messageText'])? trim($_POST['messageText']): "";
     $arr['captcha'] = isset($_POST['captcha'])? trim($_POST['captcha']): "";
-	$arr['userIP'] = $_SERVER['REMOTE_ADDR'];
-	$arr['date'] = date('Y-m-d H:i:s');
-	$arr['userBrowser'] = self::getUserBrowser();
+    $arr['userIP'] = $_SERVER['REMOTE_ADDR'];
+    $arr['date'] = date('Y-m-d H:i:s');
+    $arr['userBrowser'] = self::getUserBrowser();
     return $arr;
 }
 

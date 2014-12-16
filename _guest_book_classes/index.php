@@ -18,13 +18,13 @@ $formData = Form::getFormData();
 
 if(Form::isFormSubmitted()){
     $validateFormResult = Form::isFormVaild($formData);
-	Form::setup_session($formData);
+    Form::setup_session($formData);
     if($validateFormResult!== true) {
         $templ->setHtml($templ->processTemplateErrorOutput($validateFormResult));
     } else {
         if($db->saveMessage($formData)){
             header('Location: '.$_SERVER['REQUEST_URI']);
-			die;
+            die;
         } else {
             $msg = 'Ошибка сохранения';
         }
@@ -39,8 +39,8 @@ $objPage->getListAndPag($messageTpl,$db->getStorage());
 $page = Template::processTemplace($pageTpl, array(
     'FORM' => $templ->getHtml(),
     'MSG' => $msg,
-	'LIST' => $objPage->getList(),
-	'PAG' => $objPage->getPag()
+    'LIST' => $objPage->getList(),
+    'PAG' => $objPage->getPag()
 ));
 echo $page;
 

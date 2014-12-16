@@ -3,7 +3,7 @@ class Template{
 /**
   * @var $html - html-код
   */
-	private $html;
+private $html;
 	
 /**
  * Возвращает  шаблон по его имени, если он найден в папке шаблонов. иначе - пустую строку
@@ -26,17 +26,17 @@ public static function getTemplate($name){
  * @return string
  */
 public static function processTemplace($tpl, array $data = array()){
-	$var = "";
+    $var = "";
     foreach($data as $key => $val){
-		if(isset($_SESSION['userName']) && $key == 'userName'){
-			 $var = $_SESSION['userName'];
-		}
-		else if(isset($_SESSION['userEmail']) && $key == 'userEmail'){
-			 $var = $_SESSION['userEmail'];
-		}
-		else{
-        $var = $val;
-		}
+        if(isset($_SESSION['userName']) && $key == 'userName'){
+            $var = $_SESSION['userName'];
+        }
+        else if(isset($_SESSION['userEmail']) && $key == 'userEmail'){
+            $var = $_SESSION['userEmail'];
+        }
+        else{
+            $var = $val;
+        }
         $tpl = str_replace('{{'.$key.'}}',$var, $tpl);
     }
     return $tpl;
@@ -48,7 +48,7 @@ public static function processTemplace($tpl, array $data = array()){
  * @return string
  */
 public function processTemplateErrorOutput(array $data = array()){
-	$tpl = $this->html;
+    $tpl = $this->html;
     foreach($data as $key => $val){
         $tpl = str_replace(
             "<p class=\"help-block\" data-name=\"$key\"></p>",
@@ -64,7 +64,7 @@ public function processTemplateErrorOutput(array $data = array()){
  * @param $str
  */
 public function setHtml($str){
-	$this->html = $str;
+    $this->html = $str;
 }
 
 /**
@@ -72,6 +72,6 @@ public function setHtml($str){
  * @return mixed
  */
 public function getHtml(){
-	return $this->html;
+    return $this->html;
 }
 }
