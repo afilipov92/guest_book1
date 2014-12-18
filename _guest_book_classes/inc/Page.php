@@ -41,31 +41,19 @@ public static function navigatorPage($countPages, $pageNum){
     return $num;
 }
 
-/**
- * Возвращает данные для данной страницы
- * @param $pageNum
- * @param $array
- * @param $pageSize
- * @return array
- */
-public static function getItemsForPage($pageNum, $array, $pageSize = PAGE_SIZE){
-    $array_for_page = array_slice($array, ($pageNum - 1) * $pageSize, $pageSize);
-    return $array_for_page;
-}
 
 /**
  * Устанавливает сообщения для текущей страницы и пагинатор
  * @param $messageTpl
+ * @param $examp
  */
-public function getListAndPag($messageTpl, array $arr){
+public function getListAndPag($messageTpl, $examp){
     $Npage = self::getCurrentPage();
-    if($arr !== false){
-        $mas = static::getItemsForPage($Npage, $arr);
-        foreach($mas as $a){
-            $this->myList .= Template::processTemplace($messageTpl,$a);
-        }
+    $mas = $examp->getItemsForPage($Npage);
+    $pages = ceil($examp->getAmountRecords()/PAGE_SIZE);
+    foreach($mas as $a){
+        $this->myList .= Template::processTemplace($messageTpl,$a);
     }
-    $pages = ceil(count($arr)/PAGE_SIZE);
     $this->pag = self::navigatorPage($pages, $Npage);
 }
 

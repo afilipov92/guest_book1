@@ -1,5 +1,5 @@
 <?php
-define('PAGE_SIZE', 5);
+define('PAGE_SIZE', 6);
 define('FIRST_PAGE', 1);
 require_once('inc/inc.php');
 
@@ -34,7 +34,7 @@ if(Form::isFormSubmitted()){
 $templ->setHtml(Template::processTemplace($templ->getHtml(), $formData));
 $templ->setHtml(Template::processTemplace($templ->getHtml(), array('CAPTCHA' => Form::generateCaptcha())));
 
-$objPage->getListAndPag($messageTpl,$db->getStorage());
+$objPage->getListAndPag($messageTpl,$db);
 
 $page = Template::processTemplace($pageTpl, array(
     'FORM' => $templ->getHtml(),

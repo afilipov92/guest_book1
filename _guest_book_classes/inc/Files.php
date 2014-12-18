@@ -1,6 +1,6 @@
 ﻿<?php
-class File implements ITemplate{
-
+class Files implements IMessages{
+    private $mas;
 /**
  * Записывает информацию добавленную пользователем в файл
  * @param array $msgData
@@ -34,7 +34,6 @@ public static function preparateStringToSave($str){
 public  function getStorage(){
     $arr = file('data/db.txt', FILE_IGNORE_NEW_LINES);
     if(!empty($arr)){
-        $ret = array();
         foreach($arr as $row) {
             $tmp = explode('|', $row);
             $ret[] = array('_userName'=>$tmp[0],'_userEmail'=>$tmp[1],'messageText'=>$tmp[2],'date'=>$tmp[3],'userIP'=>$tmp[4],'userBrowser'=>$tmp[5]);
@@ -43,8 +42,26 @@ public  function getStorage(){
             $date[$key]  = $row['date'];
         }
         array_multisort($date, SORT_DESC, $ret);
-        return $ret;
+        $this->mas = $ret;
+		return($this->mas);
 	}
     else return false;
+}
+
+    /**
+     * @param $pageNum
+     * @param $pageSize
+     * @return array
+     */
+public function getItemsForPage($pageNum, $pageSize = PAGE_SIZE){
+    $array_for_page = array_slice($this->mas, ($pageNum - 1) * $pageSize, $pageSize);
+    return $array_for_page;
+}
+
+    /**
+     * @return int
+     */
+public function getAmountRecords(){
+	return count($this->mas);
 }
 }

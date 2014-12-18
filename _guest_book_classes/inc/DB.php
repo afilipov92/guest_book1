@@ -4,7 +4,7 @@ define('DB_USER', 'root');
 define('DB_PASSWORD', 'Blackpearl99');
 define('DB_NAME', 'study');
 
-class DB{
+class DB implements IMessages{
     /**
      * @var экзмепляр соединения с базой данных
      */
@@ -31,13 +31,24 @@ class DB{
 			return false;
 		}
 	}
+	
+   /**
+    * Возвращает данные для данной страницы
+    * @param $pageNum
+    * @param $pageSize
+    * @return array
+    */
+    public function getItemsForPage($pageNum, $pageSize = PAGE_SIZE){
+        $num = ($pageNum - 1) * $pageSize;
+		$mas = $this->db->query("SELECT userName AS '_userName', userEmail AS '_userEmail', messageText, date, userIP, userBrowser FROM guest_book ORDER BY date DESC LIMIT $num, $pageSize", PDO::FETCH_ASSOC)->fetchAll();
+        return $mas;
+    }
 
     /**
-     * получает массив данных из бд
      * @return mixed
      */
-    public function getStorage(){
-		$mas = $this->db->query("SELECT userName AS '_userName', userEmail AS '_userEmail', messageText, date, userIP, userBrowser FROM guest_book ORDER BY date DESC", PDO::FETCH_ASSOC)->fetchAll();
-		return $mas;
+    public function getAmountRecords(){
+		$amount = $this->db->query("SELECT COUNT(*) AS count FROM guest_book", PDO::FETCH_ASSOC)->fetch();
+		return $amount['count'];
 	}
 }
